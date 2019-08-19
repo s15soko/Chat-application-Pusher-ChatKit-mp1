@@ -25,6 +25,20 @@ class UserIDController
     }
 
     /**
+     * Remove prefix
+     * 
+     * @param {string} userChatkitID 
+     * 
+     * @return {int}
+     */
+    static removePrefix(userChatkitID)
+    {
+        var prefix = UserIDController.getUserPrefix();
+        var userID = userChatkitID.replace(prefix, '');
+        return Number(userID);
+    }
+
+    /**
      * Validate user chatkit id 
      * 
      * @param {string} userChatkitID 
