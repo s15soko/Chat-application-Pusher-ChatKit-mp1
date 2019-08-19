@@ -10,7 +10,7 @@ export class Content extends React.Component
             <div className="box">
                 <div className='picture'>
                     <picture>
-                        <img src="https://s3.amazonaws.com/moelis-assets/wp-content/uploads/2019/03/21153309/Joe-simon_BWW_7003-256x256.jpg"/>
+                        <img src={message.avatar}/>
                     </picture>
                 </div>
                 <div className='data'>
@@ -18,7 +18,7 @@ export class Content extends React.Component
                         <span>{"user: " + message.senderId}</span>
                     </div> */}
                     <div className='content'>           
-                        {message.parts[0].payload.content}
+                        {message.content}
                     </div>
                 </div>
             </div>
