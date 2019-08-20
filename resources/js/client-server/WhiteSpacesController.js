@@ -1,5 +1,3 @@
-
-
 class WhiteSpacesController
 {
     static removeWhiteSpaces(sentence)
