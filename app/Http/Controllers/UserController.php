@@ -25,10 +25,11 @@ class UserController extends Controller
     public function getDataForJS()
     {
         $userID = Auth::id();
-        $avatar = DB::table('users')->select(['avatar'])->where(['id' => $userID])->first();   
+        $userData = DB::table('users')->select(['avatar', 'name'])->where(['id' => $userID])->first();   
 
         $data['id'] = $userID;     
-        $data['avatar'] = $avatar;
+        $data['avatar'] = $userData->avatar;
+        $data['name'] = $userData->name;
         $data['rooms'] = $this->roomsMember($userID);
         return ($data);
     }
