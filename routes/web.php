@@ -30,4 +30,6 @@ Route::get('/search/friends', function(){
 Route::post("/user/data/getdata", "UserController@getDataForJS");
 Route::post("/user/friends/get", "UserFriendsController@index");
 
+Route::post("/messages/private/get", "MessagesController@getMessages");
+
 Route::post('/pusher/chatkit/quicktoken/save', 'QuickTokenController@store');
