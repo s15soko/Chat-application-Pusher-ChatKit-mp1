@@ -2,3 +2,4 @@ database/* linguist-vendored
 resources/lang/* linguist-vendored
 storage/* linguist-vendored
 config/* linguist-vendored
+public/* linguist-vendored
