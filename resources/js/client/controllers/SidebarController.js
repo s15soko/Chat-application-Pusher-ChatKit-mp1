@@ -11,24 +11,33 @@ export class SidebarController
      * || Alias for all builders
      * 
      * @param {*} friends 
-     * @param {*} loggedUser 
+     * @param {*} currentLoggedUser 
      */
-    static build(friends, loggedUser)
+    static build(friends, currentLoggedUser)
     {
-        SidebarController.buildTop(loggedUser);
+        SidebarController.buildTop(currentLoggedUser);
         SidebarController.buildFriendsContent(friends);
     }
 
-    static buildTop(loggedUser)
+    static buildTop(currentLoggedUser)
     {
         var element = document.getElementById("sidebarHeader");
-        ReactDOM.render(<Top loggedUser={loggedUser}/>, element);
+        ReactDOM.render(<Top currentLoggedUser={currentLoggedUser}/>, element);
     }
 
     static buildFriendsContent(friends)
     {
         var element = document.getElementById("friends");
         ReactDOM.render(<Friend friends = {friends}/>, element);
+    }
+
+    /**
+     * Return user id who is first on list
+     */
+    static getFirstFromList()
+    {
+        var element = $("#friends").find(".friend").first();
+        return element.attr("data-user-id");
     }
 
     static markFirstRoomOnList()
