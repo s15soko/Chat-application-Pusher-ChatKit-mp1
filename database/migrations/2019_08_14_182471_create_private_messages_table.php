@@ -17,7 +17,7 @@ class CreatePrivateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned(); // message author
             $table->bigInteger('room_id')->unsigned();
-            $table->text("content");
+            $table->text("content")->collation('utf8mb4_bin');
             $table->char("created_at", 15);
 
             $table->foreign("user_id")->references("id")->on("users");
