@@ -17,8 +17,10 @@ class UserFriendsController extends Controller
     
      /**
      * Get user friends
+     * 
+     * @return array
      */
-    public function index()
+    public function userFriends()
     {
         try {
             $user = Auth::id();
@@ -35,26 +37,63 @@ class UserFriendsController extends Controller
         }
     }
 
+    /**
+     * Search friends by name
+     */
+    public function searchByName(Request $request)
+    {
+        $name = $request['name'];  
+        $userID = Auth::id();     
+
+        // Get friend by name
+        // + get data if current logged user invited someone to friends
+        // + get data if someone invited current user
+        try {       
+            $friends = DB::select(
+                "SELECT DISTINCT `u`.`id`, `u`.`name`, `u`.`avatar`,
+                        `uf`.`added`,
+                        `fi`.`sended`, `fi`.`invited_user_id`
+                    FROM `users` AS `u`
+                        
+                        LEFT JOIN 
+                            (SELECT * from users_friends WHERE `user_id` = $userID) AS `uf`
+                                ON `uf`.`user_id` = u.id
+                                
+                        LEFT JOIN
+                            (SELECT * from friends_invitations WHERE `user_id` = $userID OR invited_user_id = $userID) AS `fi`
+                                ON `u`.`id` = (CASE 
+                                                   WHEN fi.user_id = $userID
+                                                   THEN `fi`.invited_user_id
+                                                   ELSE `fi`.`user_id`
+                                           END)
+                            
+                    WHERE NOT `u`.`id` = $userID AND `u`.`name` LIKE :name;", 
+                        [
+                         ":name" => $name
+                        ]);  
+
+            return $friends;
+        } catch (\Throwable $th) {
+            return [];
+        } 
+    }
+
     // /**
-    //  * @param int $friendID
-    //  * @param int $user / default null - then get from Auth
+    //  * Check if friend is in user friends list
     //  * 
-    //  * @return object (null or friend data)
+    //  * @param int $friendID
+    //  * @param int $user 
+    //  * 
+    //  * @return bool
     //  */
-    // public static function checkIfInFriendsList($friendID, $user = null)
+    // public static function checkIfInFriendsList($friendID, $user = null): bool
     // {
     //     if($user == null)
     //         $user = Auth::id();
 
-    //     $result = DB::table('user_friends')
+    //     return (bool)DB::table('user_friends')
     //         ->where([["user_id", $user], ["friend_id", $friendID]])
     //         ->orWhere([["user_id", $friendID], ["friend_id", $user]])
     //         ->first();
-    //     return $result;
-    //}
-
-    public function addFriend()
-    {
-        
-    } 
+    // }
 }
