@@ -13,6 +13,9 @@ class QuickTokenController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Save token in database
+     */
     public function store(Request $request)
     {
         $userID = Auth::id();

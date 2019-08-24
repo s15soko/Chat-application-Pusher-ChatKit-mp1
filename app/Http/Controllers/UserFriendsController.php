@@ -102,23 +102,4 @@ class UserFriendsController extends Controller
             return [];
         }
     }
-
-    // /**
-    //  * Check if friend is in user friends list
-    //  * 
-    //  * @param int $friendID
-    //  * @param int $user 
-    //  * 
-    //  * @return bool
-    //  */
-    // public static function checkIfInFriendsList($friendID, $user = null): bool
-    // {
-    //     if($user == null)
-    //         $user = Auth::id();
-
-    //     return (bool)DB::table('user_friends')
-    //         ->where([["user_id", $user], ["friend_id", $friendID]])
-    //         ->orWhere([["user_id", $friendID], ["friend_id", $user]])
-    //         ->first();
-    // }
 }

@@ -16,6 +16,8 @@ class UserController extends Controller
 
     /**
      * Get data for js
+     * 
+     * @return array
      */
     public function getDataForJS()
     {
