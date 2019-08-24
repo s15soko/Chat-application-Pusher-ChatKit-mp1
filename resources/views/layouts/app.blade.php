@@ -24,6 +24,7 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                         Chat
                     </a>
+                    <button id="test">TEST</button>
                </div>
 
                <div class='navigation'>
