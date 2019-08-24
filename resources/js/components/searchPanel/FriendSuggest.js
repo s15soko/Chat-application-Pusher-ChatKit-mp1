@@ -40,6 +40,7 @@ export class FriendSuggest extends React.Component
     render()
     {
         var friends = this.props.friends;
+        var currentLoggedUser = this.props.currentLoggedUser;
         var list = [];
 
         if(friends.length == 0){
@@ -50,13 +51,16 @@ export class FriendSuggest extends React.Component
 
         friends.forEach(friend => {
             list.push(
-                <Friend id={"friend" + friend.id} key={friend.id} data-user-id={friend.id} className='friend'>
+                <Friend id={"friend" + friend.id} key={friend.id} className='friend'>
 
                     <Picture>
                         <Avatar src={friend.avatar}/>
                     </Picture>
                     <Name>{friend.name}</Name>
-                    <Options friend={friend}/>
+                    <Options 
+                        friend={friend}
+                        currentLoggedUser={currentLoggedUser}
+                    />
 
                 </Friend>
             );
