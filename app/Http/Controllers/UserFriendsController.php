@@ -57,7 +57,7 @@ class UserFriendsController extends Controller
                         
                         LEFT JOIN 
                             (SELECT * from users_friends WHERE `user_id` = $userID) AS `uf`
-                                ON `uf`.`user_id` = u.id
+                                ON `uf`.`friend_id` = u.id
                                 
                         LEFT JOIN
                             (SELECT * from friends_invitations WHERE `user_id` = $userID OR invited_user_id = $userID) AS `fi`
@@ -69,13 +69,38 @@ class UserFriendsController extends Controller
                             
                     WHERE NOT `u`.`id` = $userID AND `u`.`name` LIKE :name;", 
                         [
-                         ":name" => $name
+                         ":name" => "%$name%"
                         ]);  
 
             return $friends;
         } catch (\Throwable $th) {
             return [];
         } 
+    }
+
+    /**
+     * Get all invitations requests for user
+     */
+    public function getInvitations()
+    {
+        $userID = Auth::id();
+
+        try {
+            $invitation = DB::select(
+                "SELECT `u`.`id`, `u`.`name`, `u`.`avatar`,
+                        `fi`.`sended`
+                
+                    FROM `friends_invitations` AS `fi`
+
+                        INNER JOIN `users` as `u` 
+                            ON `u`.`id` = `fi`.`user_id`
+                            
+                        WHERE `fi`.`invited_user_id` = $userID");  
+
+            return $invitation;
+        } catch (\Throwable $th) {
+            return [];
+        }
     }
 
     // /**
