@@ -1,10 +1,9 @@
 div#chatMessages{
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-
+    
     div#messages{
         height: auto;
+        overflow-y: auto;
+        padding: 5px 3px;
 
         // MESSAGE 
         div.messageContainer{
@@ -26,18 +25,6 @@ div#chatMessages{
                         display: flex;
                         justify-content: center;
                         align-items: flex-end;
-
-                        picture{
-                            width: 35px;
-                            height: 35px;
-                            overflow: hidden;
-                            border-radius: 25px;
-
-                            img{
-                                max-width: 100%;
-                                max-height: 100%;
-                            }
-                        }
                     }
 
                     div.data{
@@ -54,28 +41,16 @@ div#chatMessages{
                             }
                         }
 
-                        div.content{
-                            border-radius: 12px;
-                            background-color: rgb(236, 236, 236);
-                            padding: 1px 9px;
-                            color: black;
-                            word-wrap: break-word;
-                            width: max-content;
-                            max-width: 94%;
-                        }
                     }
                 } 
             }
 
-            // sender 
+            // sender not default styles
             div.senderMessage{
-
                 div.box{
                     flex-direction: row-reverse;
-
                     div.data{
                         align-items: flex-end;
-
                         div.content{
                             background-color: rgb(170, 212, 93);
                             color: white;
@@ -83,7 +58,6 @@ div#chatMessages{
                     }
                 }
             }
-            
         }
     }
 }

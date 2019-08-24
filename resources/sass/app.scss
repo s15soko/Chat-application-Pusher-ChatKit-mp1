@@ -8,11 +8,33 @@
 @import '~bootstrap/scss/bootstrap';
 
 @import 'message';
+@import 'websiteHeader';
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ffffff; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(207, 207, 207); 
+    border-radius: 4px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(204, 204, 204); 
 }
 
 body{
@@ -22,43 +44,11 @@ body{
     overflow: hidden;
 }
 
-$navbarHeight: 44px;
 $chat_friendsSidebarWidth: 280px;
 
 div#app{
     height: 100%;
-
-    // header
-    nav#appHeader
-    {
-        border-bottom: 1px solid #ccc;
-        height: $navbarHeight;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        display: flex;
-        justify-content: center;
-
-        div.box
-        {
-            width: 90%;
-            display: flex;
-            flex-direction: row;
-
-            div.logo{
-                width: 150px;
-                display: flex;
-                justify-content: center;
-            }
-
-            div.navigation{
-                width: 100%;
-
-
-            }
-        }
-    }
-
+  
     // app content
     div#content{
         padding-top: $navbarHeight;
@@ -73,6 +63,41 @@ div#app{
             flex-direction: column;
             border-right: 1px solid rgb(202, 202, 202);
             height: 100%;
+
+            div#sidebarHeader > div
+            {
+                display: inline-flex;
+                overflow: hidden;
+                width: 100%;
+                height: 60px;
+                padding: 3px 8px;
+
+                picture{
+                    min-width: 50px;
+                    height: 50px;
+                    overflow: hidden;
+                    border-radius: 45px;
+
+                    img{
+                        min-width: 100%;
+                        max-width: 100%;
+                        max-height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                div.dataContainer{
+                    padding-left: 16px;
+                    display: flex;
+                    justify-content: left;
+                    align-items: center;
+
+                    span{
+                        font-size: 22px;
+                        font-weight: bolder;
+                    }
+                }
+            }
 
             div#friends
             {
@@ -136,49 +161,156 @@ div#app{
                 .active{
                     background-color: rgb(241, 241, 241);
                 }
+
+                .newMessage{
+                    background-color: #c3e8de !important;
+
+                    &:hover{
+                        background-color: #bbe6da !important;
+                    }
+                }
             }
         }
 
         div#chatContent{
             height: 100%;
             width: 100%;
-            max-width: 100%;
             overflow: hidden;
             
             div#chatWindow{
                 width: 100%;
-                min-height: 100%;
-                max-height: 100%;
+                height: 100%;
                 display: flex;
                 flex-direction: column;
                 position: relative;
     
-                // all messages 
+                div#chatTop
+                {
+                    height: 60px;
+                    border-bottom: 1px solid rgb(233, 233, 233);
+                    display: flex;
+                    align-items: center;
+
+                    div#roomData
+                    {
+                        display: inline-flex;
+                        padding: 0px 12px;
+
+                        picture{
+                            min-width: 50px;
+                            max-width: 50px;
+                            max-height: 50px;
+                            overflow: hidden;
+                            display: block;
+                            border-radius: 30px;
+
+                            img{
+                                min-width: 100%;
+                                max-width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
+                        div.content{
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            padding-left: 15px;
+
+                            div.top{
+                                height: 22px;
+                                span{
+                                    font-weight: bolder;
+                                }
+                            }
+                            div.bottom{
+                                height: 20px;
+                                span{
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // contaner for messages
                 div#chatMessages{ 
+                    width: 100%;
+                    overflow-x: hidden;
+                    height: calc(100% - 130px);
                 }
         
                 div#chatBottomInputsContainer{
                     border-top: 1px solid #ccc;
                     display: flex;
-                    flex-direction: column;
-                    justify-content: flex-end;
-                    height: 110px;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    height: 70px;
                     width: 100%;
-                    padding: 5px;
+                    padding: 5px 10px;
                     position: absolute;
                     bottom: 0;
                     
-                    textarea#chatMessageTextarea{
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                        height: 60px;
-                        
-                        padding: 3px;
-                    }
-    
-                    input#chatSubmit{
-                        margin-top: 4px;
-                        width: 100px;
+                    div#panel{
+                        border-bottom: 1px solid rgb(163, 163, 163);
+                        position: relative;
+                        width: 100%;
+                        padding: 0 6px;
+                        margin: 0 12px 0 5px;
+
+                        div#chatEmojisContainer{
+                            position: absolute; 
+                            width: max-content;
+                            right: 14px;
+                            display: flex;
+                            height: 100%;
+
+                            button#chatEmojiFace{
+                                background: transparent;
+                                border: none;
+                                outline: none;
+                            }
+
+                            div#emojisContainer{
+                                display: none;
+                                position: absolute;
+                                bottom: 40px;
+                                right: 0;
+                                width: 226px;
+                                max-height: 280px;
+                                overflow-x: hidden;
+                                padding: 7px;
+                                border-radius: 3px;
+                                background-color: white;
+                                border: 1px solid rgb(236, 236, 236);
+
+                                .icon{
+                                    font-size: 20px;
+                                    margin: 0 2px;
+
+                                    cursor: pointer;
+                                    &:hover{
+                                        background-color: rgb(219, 219, 219);
+                                    }
+                                }
+                            }
+
+                            div.active{
+                                display: block !important;
+                            }
+                        }
+
+                        textarea#chatMessageTextarea{
+                            height: 34px;
+                            font-size: 18px;
+                            width: 100%;
+                            padding: 3px 40px 3px 3px;
+                            border: none;
+                            background: transparent;
+                            outline: none;
+                            resize: unset;
+                        }
                     }
                 }
             }
