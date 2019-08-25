@@ -15,7 +15,7 @@ export class Friend extends React.Component
                     </picture>
                     <div className='dataContainer'>
                         <span className='name hideText'>{friend.name}</span>
-                        <span className='lastMessage hideText'>{"last message..."}</span>
+                        <span className='lastMessage hideText'></span>
                     </div>
                 </div>        
             );

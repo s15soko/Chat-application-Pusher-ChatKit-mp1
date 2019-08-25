@@ -42,12 +42,12 @@ const DiscardIcon = styled.i`
 `;
 
 
-const SendedFlag = styled.div`
+const SentFlag = styled.div`
     display: flex;
     align-items: center;
 `;
 
-const SendedText = styled.span`
+const SentText = styled.span`
     padding: 0 2px;
     font-size: 16px;
 `;
@@ -165,8 +165,8 @@ export class Options extends React.Component
         var friend = this.state.friend;
         var currentLoggedUser = this.state.currentLoggedUser;
 
-        // if invitation was sended
-        if(friend.sended != null){
+        // if invitation was sent
+        if(friend.sent != null){
             // who invite
             if(currentLoggedUser.id == friend.invited_user_id){
                 this.setRenderAcceptOrDiscard();
@@ -175,7 +175,7 @@ export class Options extends React.Component
                 this.setRenderSent();
             }
         }
-        else if(friend.sended == null){
+        else if(friend.sent == null){
             if(friend.added == null){
                 this.setRenderAdd();
             }else{
@@ -246,10 +246,10 @@ export class Options extends React.Component
     {
         return(
             <Container>
-                <SendedFlag>
+                <SentFlag>
                     <i className="fas fa-check"></i>
-                </SendedFlag>
-                <SendedText>Sent</SendedText>  
+                </SentFlag>
+                <SentText>Sent</SentText>  
             </Container>
         );
     }
