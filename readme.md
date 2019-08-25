@@ -5,7 +5,7 @@
 
 ### Quick Token
 
-Because application works on php and node server, I created 'quick token', which is creating on php side when user is connecting with chatkit server. Token is placed in request header and checked on node server to auth user.
+Because application works on php and node server, I created 'quick token', which is created on php side when user is connecting with chatkit server. Token is placed in request header and checked on node server to auth user.
 
 
 ### Javascript　
