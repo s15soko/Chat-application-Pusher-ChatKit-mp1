@@ -17,7 +17,7 @@ class CreateFriendsInvitationsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('invited_user_id');
-            $table->unsignedInteger("sended")->default(time());
+            $table->unsignedInteger("sent")->default(time());
 
             $table->foreign("user_id")->references("id")->on("users");
             $table->foreign("invited_user_id")->references("id")->on("users");
