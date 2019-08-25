@@ -12,6 +12,7 @@ var QuickTokenController = require("./server/controllers/QuickTokenController");
 var UserController = require("./server/controllers/UserController");
 var ChatKitController = require("./server/controllers/ChatKitController"); 
 var RoomsController = require("./server/controllers/RoomsController");
+const userFriendsController = require("./server/controllers/UserFriendsController");
 const chatkit = ChatKitController.init();
 
 // default
@@ -53,10 +54,11 @@ app.post("/pusher/chatkit/message/send", (req, res) => {
   var userChatkitID = UserIDController.addPrefix(userID); 
   var token = req.headers.quicktoken;
 
+  // check user by token
   QuickTokenController.checkToken(userID, token)
     .then(function(response){
       if(response) {
-        var WhiteSpacesController = require("./server/WhiteSpacesController");
+        var WhiteSpacesController = require("./client-server/WhiteSpacesController");
         // if message is empty return
         if(WhiteSpacesController.removeWhiteSpaces(message).length == 0){
           res.status(400)
@@ -85,8 +87,7 @@ app.post("/pusher/chatkit/message/send", (req, res) => {
     }) 
 });
 
-
-// send a message
+// create room
 app.post("/pusher/chatkit/room/create", (req, res) => {
   
   var roomID = req.body.roomID;
@@ -130,6 +131,97 @@ app.post("/pusher/chatkit/room/create", (req, res) => {
       }
     })
       .catch(function(error){
-        console.log(error);
       });
+});
+
+// send a friend invitation
+app.post("/chat/friends/list/send", (req, res) => {
+  
+  var userID = req.body.userID;
+  var friendID = req.body.friendID;
+  var token = req.headers.quicktoken;
+  
+  // check user by token
+  QuickTokenController.checkToken(userID, token)
+    .then(function(response){
+      if(response) {
+
+        userFriendsController.sendFriendInvitation(userID, friendID)
+          .then(function(status){
+            res.sendStatus(status);
+          });
+
+      }else{
+        res.sendStatus(403);
+      }
+    }) 
+});
+
+// remove friend from friends list
+app.post("/chat/friends/list/remove", (req, res) => {
+  
+  var userID = req.body.userID;
+  var friendID = req.body.friendID;
+  var token = req.headers.quicktoken;
+  
+  // check user by token
+  QuickTokenController.checkToken(userID, token)
+    .then(function(response){
+      if(response) {
+
+        userFriendsController.removeFriendFromList(userID, friendID)
+          .then(function(status){
+            res.sendStatus(status);
+          })
+
+      }else{
+        res.sendStatus(403);
+      }
+    }) 
+});
+
+// accept friend invitation
+app.post("/chat/friends/list/accept", (req, res) => {
+  
+  var userID = req.body.userID;
+  var friendID = req.body.friendID;
+  var token = req.headers.quicktoken;
+
+  // check user by token
+  QuickTokenController.checkToken(userID, token)
+    .then(function(response){
+      if(response) {
+
+        userFriendsController.acceptFriendInvitation(chatkit, userID, friendID)
+          .then(function(status){
+            res.sendStatus(status);
+          })
+
+      }else{
+        res.sendStatus(403);
+      }
+    }) 
+});
+
+// discard friend invitation
+app.post("/chat/friends/list/discard", (req, res) => {
+  
+  var userID = req.body.userID;
+  var friendID = req.body.friendID;
+  var token = req.headers.quicktoken;
+  
+  // check user by token
+  QuickTokenController.checkToken(userID, token)
+    .then(function(response){
+      if(response) {
+
+        userFriendsController.removeFriendInvitation(userID, friendID)
+          .then(function(status){
+            res.sendStatus(status);
+          });
+
+      }else{
+        res.sendStatus(403);
+      }
+    }) 
 });
