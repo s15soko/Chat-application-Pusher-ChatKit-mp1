@@ -16,16 +16,16 @@ export class RoomsController
     }
 
     /**
-     * Check if rooms are the same
+     * Check if user is in actuall room
      * 
-     * @param {*} currentRoom 
-     * @param {*} expectedRoom 
+     * @param {object} actuallChattingRoom 
+     * @param {object} userChatkitID
+     * 
+     * @return {boolean}
      */
-    static ifInRoom(currentRoom, expectedRoom)
+    static userInRoom(actuallChattingRoom, userChatkitID)
     {
-        if(currentRoom == expectedRoom)
-            return true;
-        return false;
+        return actuallChattingRoom.members.includes(userChatkitID);
     }
 
     /**
