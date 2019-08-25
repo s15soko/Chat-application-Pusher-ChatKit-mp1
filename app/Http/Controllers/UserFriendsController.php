@@ -52,7 +52,7 @@ class UserFriendsController extends Controller
             $friends = DB::select(
                 "SELECT DISTINCT `u`.`id`, `u`.`name`, `u`.`avatar`,
                         `uf`.`added`,
-                        `fi`.`sended`, `fi`.`invited_user_id`
+                        `fi`.`sent`, `fi`.`invited_user_id`
                     FROM `users` AS `u`
                         
                         LEFT JOIN 
@@ -88,7 +88,7 @@ class UserFriendsController extends Controller
         try {
             $invitation = DB::select(
                 "SELECT `u`.`id`, `u`.`name`, `u`.`avatar`,
-                        `fi`.`sended`
+                        `fi`.`sent`
                 
                     FROM `friends_invitations` AS `fi`
 
