@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout'); 
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/search/friends', function(){
     return view('search.friends');
@@ -28,7 +27,8 @@ Route::get('/search/friends', function(){
 
 # AJAX
 Route::post("/user/data/getdata", "UserController@getDataForJS");
-Route::post("/user/friends/get", "UserFriendsController@index");
+Route::post("/user/friends/get", "UserFriendsController@userFriends");
+Route::post("/user/friends/search", "UserFriendsController@searchByName");
 
 Route::post("/messages/private/get", "MessagesController@getMessages");
 
