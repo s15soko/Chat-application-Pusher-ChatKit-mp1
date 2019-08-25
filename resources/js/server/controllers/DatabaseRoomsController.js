@@ -39,9 +39,12 @@ class DatabaseRoomsController
     }
 
     /**
+     * Save room member
      * 
      * @param {int} roomID 
      * @param {object} member
+     * 
+     * @return {Promise int} status
      */
     static saveRoomMember(roomID, member)
     {

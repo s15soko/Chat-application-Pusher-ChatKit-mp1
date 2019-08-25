@@ -8,6 +8,8 @@ class UserFriendsController
      * 
      * @param {int} userID 
      * @param {int} friendID 
+     * 
+     * @return {Promise int} status
      */
     static sendFriendInvitation(userID, friendID)
     {
@@ -42,6 +44,8 @@ class UserFriendsController
      * 
      * @param {int} userID 
      * @param {int} friendID 
+     * 
+     * @return {Promise int} status
      */
     static removeFriendFromList(userID, friendID)
     {
@@ -72,6 +76,14 @@ class UserFriendsController
         });
     }
 
+    /**
+     * Remove friend invitation
+     * 
+     * @param {int} userID 
+     * @param {int} friendID 
+     * 
+     * @return {Promise int} status
+     */
     static removeFriendInvitation(userID, friendID)
     {
         return new Promise(function(resolve, reject){
@@ -101,6 +113,13 @@ class UserFriendsController
         });
     }
 
+    /**
+     * Accept invitation to friends
+     * 
+     * @param {object} chatkit 
+     * @param {int} userID 
+     * @param {int} friendID 
+     */
     static acceptFriendInvitation(chatkit, userID, friendID)
     {
         const userController = require("./UserController");

@@ -21,10 +21,10 @@ class MessagesController
                       resolve(200);
                     })
                     .catch(err => {
-                      resolve(400);
+                      reject(err);
                     })
             } catch (error) {
-                resolve(400);
+                reject(error);
             }
         });
     }

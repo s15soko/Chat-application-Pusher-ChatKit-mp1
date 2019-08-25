@@ -4,9 +4,10 @@ var poolConnection = DBConnection.init();
 class DatabaseUserFriendsController
 {
     /**
+     * Add user friend
      * 
-     * @param {*} userID 
-     * @param {*} friendID 
+     * @param {int} userID 
+     * @param {int} friendID 
      * 
      * @return {Promise int} status
      */

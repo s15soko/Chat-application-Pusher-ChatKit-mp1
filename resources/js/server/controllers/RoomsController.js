@@ -7,6 +7,8 @@ class RoomsController
      * Check if room exist in database
      * 
      * @param {int} roomID 
+     * 
+     * @return {Promise object}
      */
     static checkIfRoomExist(roomID)
     {
@@ -38,6 +40,8 @@ class RoomsController
      * Get room members (users ids) 
      * 
      * @param {int} roomID 
+     * 
+     * @return {Promise object}
      */
     static getRoomMembers(roomID)
     {

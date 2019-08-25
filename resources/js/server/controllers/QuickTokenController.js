@@ -9,7 +9,7 @@ class QuickTokenController
      * @param {int} userID 
      * @param {string} token
      * 
-     * @return {boolean}
+     * @return {Promise boolean}
      */
     static checkToken(userID, token)
     {
