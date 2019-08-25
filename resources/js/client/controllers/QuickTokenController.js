@@ -11,7 +11,7 @@ export class QuickTokenController
         let quickToken = QuickTokenController.generateToken();
         QuickTokenController.saveInDatabase(quickToken);
         // set quick token header
-        axios.defaults.headers.common.quickToken = quickToken;
+        QuickTokenController.setHeader(quickToken);
     }
 
     /**
@@ -38,9 +38,9 @@ export class QuickTokenController
     /**
      * Set token in header 
      * 
-     * @param {string} token 
+     * @param {string} quickToken 
      */
-    static setHeader(token)
+    static setHeader(quickToken)
     {
         axios.defaults.headers.common.quickToken = quickToken;
     }
