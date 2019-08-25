@@ -1,93 +1,75 @@
 const DBConnection = require('../DatabaseConnection'); 
 var poolConnection = DBConnection.init();
 
-class RoomsController
+class DatabaseRoomsController
 {
     /**
-     * Check if room exist in database
+     * Save room in database
      * 
-     * @param {int} roomID 
-     */
-    static checkIfRoomExist(roomID)
-    {
-        return new Promise(function(resolve, reject){
-
-            poolConnection.getConnection(function(err, connection)
-            { 
-                if(err){
-                    reject(err);
-                    return;
-                }
-
-                connection.query(`SELECT room_id from rooms WHERE id = ? LIMIT 1`, [Number(roomID)], 
-                    function(err, result, fields) {
-                        connection.release();
-
-                        if(err){
-                            reject(err);
-                            return;
-                        }
-
-                        resolve(result);
-                    });
-            }); 
-        });
-    }
-
-    /**
-     * Get room members (users ids) 
-     * 
-     * @param {int} roomID 
-     */
-    static getRoomMembers(roomID)
-    {
-        return new Promise(function(resolve, reject){
-
-            poolConnection.getConnection(function(err, connection)
-            { 
-                if(err){
-                    reject(err);
-                    return;
-                }
-
-                connection.query(`SELECT user_id from rooms_members WHERE room_id = ?`, [Number(roomID)], 
-                    function(err, result, fields) {
-                        connection.release();
-
-                        if(err){
-                            reject(err);
-                            return;
-                        }
-
-                        resolve(result);
-                    });
-            }); 
-        });
-    }
-
-    /**
-     * Create room 
-     * 
-     * @param {object} chatkit
      * @param {string} roomChatkitID 
-     * @param {string} creatorChatkitID 
-     * @param {object} roomMembers 
-     * @param {boolean} isPrivate 
-     * @param {string} roomName 
+     * @param {string} type 
      * 
-     * @return {*}
+     * @return {Promise object}
+     * || Data like last inserted id
      */
-    static createRoom(chatkit, roomChatkitID, creatorChatkitID, roomMembers, isPrivate = true, roomName = "room")
+    static saveRoom(roomChatkitID, type = 'one-to-one')
     {
-        return chatkit
-            .createRoom({
-                id: String(roomChatkitID),
-                creatorId: String(creatorChatkitID),
-                isPrivate: Boolean(isPrivate),
-                name: String(roomName),
-                userIds: roomMembers
-            });
+        return new Promise(function(resolve, reject){
+
+            poolConnection.getConnection(function(err, connection)
+            { 
+                if(err){
+                    reject(err);
+                    return;
+                }
+
+                connection.query(`INSERT INTO rooms VALUES (null, ?, ?) ON DUPLICATE KEY UPDATE id = id`, [String(roomChatkitID), String(type)], 
+                    function(err, result, fields) {
+                        connection.release();
+
+                        if(err){
+                            reject(err);
+                            return;
+                        }
+
+                        resolve(result);  
+                    });
+            }); 
+        });
+    }
+
+    /**
+     * 
+     * @param {int} roomID 
+     * @param {object} member
+     */
+    static saveRoomMember(roomID, member)
+    {
+        return new Promise(function(resolve, reject){
+
+            poolConnection.getConnection(function(err, connection)
+            { 
+                if(err){
+                    reject(err);
+                    return;
+                }
+
+                var now = Math.round(new Date().getTime() / 1000);
+
+                connection.query(`INSERT INTO rooms_members VALUES (null, ?, ?, ${now});`, [Number(member), Number(roomID)], 
+                    function(err, result, fields) {
+                        connection.release();
+
+                        if(err){
+                            reject(err);
+                            return;
+                        }
+
+                        resolve(200);
+                    });
+            }); 
+        });
     }
 }
 
-module.exports = RoomsController;
+module.exports = DatabaseRoomsController;

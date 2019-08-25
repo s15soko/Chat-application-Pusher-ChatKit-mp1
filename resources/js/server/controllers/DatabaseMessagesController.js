@@ -1,4 +1,5 @@
 const DBConnection = require('../DatabaseConnection'); 
+var pollConnection = DBConnection.init();
 
 class DatabaseMessagesController
 {
@@ -11,22 +12,20 @@ class DatabaseMessagesController
      */
     static saveMessage(userID, roomID, message)
     {
-        try {
-            var connection = DBConnection.init();
-            connection.connect();
+        pollConnection.getConnection(function(err, connection){
+            if(err){
+                return;
+            }
 
             var now = new Date().getTime();
 
-            connection.query(`INSERT INTO private_messages VALUES (null, ?, ?, ?, '${now}');`, [
-                Number(userID),
-                Number(roomID),
-                String(message)
-            ], function(error, result, fields){
+            connection.query(`INSERT INTO private_messages VALUES (null, ?, ?, ?, '${now}');`, [Number(userID), Number(roomID), String(message)], 
+                function(error, result, fields){
+                    connection.release();
 
-            })
-        } catch (error) {
-            console.log(error);
-        }
+                    // return...
+                })
+        })
     }
 }
 

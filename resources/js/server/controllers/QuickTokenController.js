@@ -1,4 +1,5 @@
 var DBConnection = require('../DatabaseConnection');
+var poolConnection = DBConnection.init();
 
 class QuickTokenController
 {
@@ -13,25 +14,27 @@ class QuickTokenController
     static checkToken(userID, token)
     {
         return new Promise(function(resolve, reject){
-        
-            try {
-                var connection = DBConnection.init();
-                connection.connect();
-            
-                connection.query(`SELECT token from quick_token WHERE user_id = ? LIMIT 1`, [
-                    Number(userID),
-                ], function(error, result, fields){
 
-                    if(result.length > 0){
-                        var sqlToken = result[0]['token'];
+            poolConnection.getConnection(function(err, connection)
+            { 
+                if(err){
+                    reject(err);
+                    return;
+                }
 
-                        resolve(sqlToken === (token));
+                connection.query('SELECT token from quick_token WHERE user_id = ?', [Number(userID)], function(err, result, fields) {
+                    connection.release();
+
+                    if(err){
+                        reject(err);
+                        return;
                     }
-                })
-            } catch (error) {
-                resolve(false);
-            }
 
+                    if(result)
+                        resolve(result[0].token == token);
+                });
+            });
+            
         });
     }
 }

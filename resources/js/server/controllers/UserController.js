@@ -31,7 +31,7 @@ class UserController
                         }
                     }); 
             } catch (error) {
-                resolve(400);
+                reject(error);
             }
         });
     }
